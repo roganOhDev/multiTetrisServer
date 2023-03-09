@@ -29,16 +29,15 @@ public class ClientHandler extends Thread {
                 sendToAllClients("Here's A New Challenger!".getBytes());
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Error Handling While Client Connection : " + e.getMessage());
 
-        } finally {
             clients.remove(this);
             System.out.println("Client Disconnected: " + socket.getRemoteSocketAddress());
         }
     }
 
-    private void sendToAllClients(final byte[] data) throws IOException {
+    private void sendToAllClients(final byte[] data) {
         clients.forEach(client -> {
             try {
                 sendToOtherClients(client, data);
@@ -46,7 +45,6 @@ public class ClientHandler extends Thread {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-
         });
     }
 

@@ -15,7 +15,7 @@ public class TetrisServer {
             System.out.println("Server Running in Port : " + serverSocket.getLocalPort());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
