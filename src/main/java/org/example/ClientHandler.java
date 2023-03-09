@@ -25,6 +25,7 @@ public class ClientHandler extends Thread {
             out = new DataOutputStream(socket.getOutputStream());
 
             while (true) {
+                //tetris game
                 sendToAllClients("Here's A New Challenger!".getBytes());
             }
 
@@ -37,14 +38,22 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void sendToAllClients(byte[] data) throws IOException {
-        for (final var client : clients) {
+    private void sendToAllClients(final byte[] data) throws IOException {
+        clients.forEach(client -> {
+            try {
+                sendToOtherClients(client, data);
 
-            if (client != this) {
-
-                client.out.write(data);
-                client.out.flush();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
+
+        });
+    }
+
+    private void sendToOtherClients(final ClientHandler client, final byte[] data) throws IOException {
+        if (client != this) {
+            client.out.write(data);
+            client.out.flush();
         }
     }
 }

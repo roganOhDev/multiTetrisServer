@@ -13,6 +13,7 @@ public class TetrisServer {
             serverSocket = new ServerSocket(port);
             clients = new ArrayList<>();
             System.out.println("Server Running in Port : " + serverSocket.getLocalPort());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -26,7 +27,9 @@ public class TetrisServer {
                 final var client = new ClientHandler(socket, clients);
 
                 clients.add(client);
+
                 client.start();
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
